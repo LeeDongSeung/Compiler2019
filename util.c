@@ -325,15 +325,23 @@ void printTree( TreeNode * tree )
 					fprintf(listing,"Function : %s\n",tree->attr.name);
 				}
 				else if(tree->kind.decl==VarK){
+					fprintf(listing,"Variable Declaration\n");
+					printSpaces();
 					fprintf(listing,"ID: %s\n",tree->attr.name);
 				}
 				if(tree->kind.decl==ArrK){
+					fprintf(listing,"Array Declaration\n");
+					printSpaces();
 					fprintf(listing,"ID: %s\n",tree->attr.name);
 						
 				} 
         }
 		else if(tree->nodekind==ParamK){
-			fprintf(listing,"Parameter = %s\n",tree->attr.name);
+			fprintf(listing,"Parameter\n");
+			if(tree->child[0]==NULL){
+					printSpaces();
+					fprintf(listing,"(Void)\n");
+			}
 		}
 		else if(tree->nodekind == TypeK){
 			fprintf(listing,"Type: ");
@@ -345,9 +353,6 @@ void printTree( TreeNode * tree )
 			}
 			else if(tree->attr.type==VOID){
 					fprintf(listing,"Void\n");
-			}
-			else if(tree->attr.type == Array){
-					fprintf(listing,"array %d\n",tree->intflag);
 			}
 			else{
 					fprintf(listing,"Unknown Type Node!\n");

@@ -105,9 +105,11 @@ var_declaration : type_specifier identifier SEMI
 						$$->attr.name = $2->attr.name;
 						$$->lineno = lineno;
 						$$->sibling = newTypeNode(TypeNameK);
-						$$->sibling->attr.type = Array;
-						$$->sibling->intflag = savedNumber;
+						$$->sibling->attr.type = $1->attr.type;
 						$$->sibling->lineno = lineno;
+						$$->sibling->sibling = newExpNode(ConstK);
+						$$->sibling->sibling->attr.val = savedNumber;
+						$$->sibling->sibling->lineno = lineno;
 				}
 				;
 /* 5 */
@@ -174,6 +176,7 @@ param : type_specifier identifier
 	{
 		$$ = newParamNode(ParamVarK);
 		$$->child[0] = $1;
+		$$->child[1] = $2;
 		$$->attr.name = $2->attr.name;
 	}
 	| type_specifier identifier LBRACKET RBRACKET
@@ -181,6 +184,7 @@ param : type_specifier identifier
 		$$ = newParamNode(ParamArrK);
 		$$->attr.name = $2->attr.name;
 		$$->child[0] = $1;
+		$$->child[1] = $2;
 	}
 	;
 

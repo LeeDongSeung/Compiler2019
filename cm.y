@@ -61,6 +61,7 @@ declaration_list : declaration_list declaration
 				 | declaration
 				 {
 						 $$ = $1;
+					
 				 }
 				 ;
 /* 3 */
@@ -96,9 +97,6 @@ var_declaration : type_specifier identifier SEMI
 						$$->lineno = lineno;
 						$$->sibling = newTypeNode(TypeNameK);
 						$$->sibling->attr.type = $1->attr.type;
-						//why should i add this two line below?
-						$$->child[0] = $2;
-						$$->child[1] = $1;
 				}
 				| type_specifier identifier LBRACKET number RBRACKET SEMI
 				{
@@ -130,7 +128,6 @@ fun_declaration : type_specifier identifier
 					$$ = newDeclNode(FuncK);
 					$$->attr.name = $2->attr.name;
 					$$->lineno = lineno;
-					//$$->child[0] = $2;
 				}
 				LPAREN params RPAREN compound_stmt
 				{
@@ -150,8 +147,6 @@ params : param_list
 		}
 		| VOID
 		{
-		//	$$ = newTypeNode(TypeNameK);
-		//	$$->attr.type = VOID;
 			$$ = newParamNode(ParamVarK);
 		}
 		;
@@ -179,7 +174,6 @@ param : type_specifier identifier
 	{
 		$$ = newParamNode(ParamVarK);
 		$$->child[0] = $1;
-	//	$$->child[1] = $2;
 		$$->attr.name = $2->attr.name;
 	}
 	| type_specifier identifier LBRACKET RBRACKET
@@ -187,7 +181,6 @@ param : type_specifier identifier
 		$$ = newParamNode(ParamArrK);
 		$$->attr.name = $2->attr.name;
 		$$->child[0] = $1;
-	//	$$->child[1] = $2;
 	}
 	;
 
@@ -203,17 +196,15 @@ compound_stmt : LBRACE local_declarations statement_list RBRACE
 local_declarations : local_declarations var_declaration
 				{
 					YYSTYPE t = $1;
-					$2->child[0]->intflag = 1;
-					$2->child[1]->intflag = 1;
+				//for local variable int!
+				$2->sibling->intflag = 1;
 					if(t){
 							while(t->sibling) t = t->sibling;
-							t->sibling = $2->child[0];
-							t->sibling->sibling = $2->child[1];
+							t->sibling = $2;
 							$$ = $1;
 					}
 					else{
-							$$ = $2->child[0];
-							$$->sibling = $2->child[1];
+							$$ = $2;
 					}
 				}
 				|
@@ -308,7 +299,6 @@ return_stmt : RETURN SEMI
 			}
 			| RETURN expression SEMI
 			{
-				//	fprintf(listing,"12\n");
 				$$ = newStmtNode(RetK);
 				$$->child[0] = $2;
 			}

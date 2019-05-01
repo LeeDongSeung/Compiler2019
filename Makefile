@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS =  -Wall
+CFLAGS = -g -Wall
 OBJS = main.o util.o lex.yy.o cm.tab.o
 TARGET = 20161616
 OTHERS = lex.yy.c cm.tab.c cm.tab.h

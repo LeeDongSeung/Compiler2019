@@ -266,32 +266,12 @@ const char*OpTable[]={
 		"==\n",
 		"!=\n"
 };
-const char*DeclTable[]={
-		"Function Declaration\n",
-		"Variable Declaration\n",
-		"Variable Array Declaration\n",
-};
 const char*StmtTable[]={
 		"If\n",
 		"While\n",
 		"Return\n",
 		"Compound statement\n"
 };
-void printTypeK(TokenType type){
-
-	fprintf(listing,"Type: ");
-	if(type==INT){
-			fprintf(listing,"Int\n");
-		}
-	else if(type==VOID){
-			fprintf(listing,"Void\n");
-		}	
-	else{
-			fprintf(listing,"Unknown Type Node!\n");
-		}
-
-	return;
-}
 void printTree( TreeNode * tree )
 {
   int i;
@@ -313,7 +293,7 @@ void printTree( TreeNode * tree )
           switch (tree->kind.exp)
             {
             case OpK:
-              fprintf(listing, "Op: ");
+              fprintf(listing, "Op:");
 			  if(tree->attr.op<266||tree->attr.op>275)
 					  fprintf(listing,"Operation Error!\n");
 			  else{
@@ -330,7 +310,7 @@ void printTree( TreeNode * tree )
 			  fprintf(listing,"ID: %s\n",tree->attr.name);
 			  break;
 			case CallK:
-			fprintf(listing,"Call Procedure : %s\n",tree->attr.name);
+			fprintf(listing,"Call procedure: %s\n",tree->attr.name);
 			break;
 			case AssignK:
 			fprintf(listing,"Op:=\n");
@@ -379,8 +359,6 @@ void printTree( TreeNode * tree )
     	for (i = 0; i < MAXCHILDREN; i++){
        		if(tree->child[i]!=NULL){
 
-					//why???? 20190501!!!!!
-				if(tree->nodekind == DeclK&&tree->kind.decl == VarK)continue;
 				printTree(tree->child[i]);
 			}
 		}

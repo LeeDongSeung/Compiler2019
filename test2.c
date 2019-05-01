@@ -3,15 +3,13 @@ element array */
 
 
 int x[10];
-int aa[10];
 int yy;
-int zz;
-int ww;
+int zz[20];
 int minloc(int a[],int low,int high)
 {
 		int i; int x; int k;
 		k=low;
-		x = a[low];
+		x = a[low+3];
 		i = low+1;
 		while(i<high)
 		{
@@ -23,7 +21,6 @@ int minloc(int a[],int low,int high)
 
 		return k;
 }
-
 void sort( int a[],int low,int high)
 {
 		int i;int k;

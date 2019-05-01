@@ -7,7 +7,15 @@
 
 #ifndef _UTIL_H_
 #define _UTIL_H_
-
+/*
+const char*StmtTable[]={
+		"If Statement\n",
+		"While Statement\n",
+		"Return Statement\n",
+		"Compound Statement\n",
+		"Unknown Statement\n"
+};
+*/
 /* Procedure printToken prints a token 
  * and its lexeme to the listing file
  */
@@ -34,4 +42,18 @@ char * copyString( char * );
  * listing file using indentation to indicate subtrees
  */
 void printTree( TreeNode * );
+
+/*Function newDeclNode creates a new statement
+ * node for syntax tree construction
+ */
+TreeNode* newDeclNode(DeclKind);
+
+/* Function newTypeNode creates a new statement
+ * node for syntax tree construction
+ */
+TreeNode* newTypeNode(TypeKind);
+/* Function newParamNode creates a new statement
+ * node for syntax tree construction
+ */
+TreeNode* newParamNode(ParamKind);
 #endif

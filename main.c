@@ -8,7 +8,7 @@
 #include "globals.h"
 
 /* set NO_PARSE to TRUE to get a scanner-only compiler */
-#define NO_PARSE TRUE
+#define NO_PARSE FALSE
 /* set NO_ANALYZE to TRUE to get a parser-only compiler */
 #define NO_ANALYZE TRUE
 //here we get only parser-only compiler
@@ -47,8 +47,7 @@ int Error = FALSE;
 
 int main( int argc, char * argv[] )
 {
-  //Later!!!!!!!!!!!1
-  //TreeNode * syntaxTree;
+  TreeNode * syntaxTree;
   char pgm[200]; /* source code file name */
   if (argc != 2)
     {
@@ -116,4 +115,6 @@ int main( int argc, char * argv[] )
   fclose(source);
   return 0;
 }
-
+int yywrap(){
+		return 1;
+}

@@ -21,27 +21,27 @@
 #ifndef TRUE
 #define TRUE 1
 #endif
-
+#ifndef YYPARSER
+#include "cm.tab.h"
+#define YYPARSER
+#endif
 
 
 /* MAXRESERVED = the number of reserved words */
 #define MAXRESERVED 8
-
+/*
 typedef enum
-	/*book-keeping tokens */
 	{ENDFILE,ERROR,
-	/*reserved words */
 	IF,ELSE,INT,RETURN,WHILE,VOID,
-	/* multicharacter tokens*/
 	ID,NUM,
-	/*special symbols*/
 	ASSIGN,EQ,LT,LTEQ,GT,GTEQ,NOTEQ,PLUS,MINUS,TIMES,OVER,
 	LPAREN,RPAREN,SEMI,COMMA,LBRACE,RBRACE,LBRACKET,RBRACKET,
 	COMMENT,COMMENT_ERROR
-	/* operator*/
 	
 	}TokenType;
+*/
 
+typedef int TokenType;
 extern FILE* source; /* source code text file */
 extern FILE* listing; /* listing output text file */
 extern FILE* code; /* code text file for TM simulator */
@@ -52,15 +52,17 @@ extern int lineno;
 /***********   Syntax tree for parsing ************/
 /**************************************************/
 
-typedef enum { StmtK,ExpK } NodeKind;
+typedef enum { StmtK,ExpK,DeclK,TypeK,ParamK } NodeKind;
 typedef enum { IfK, IterK,RetK,CompK } StmtKind;
-typedef enum { OpK, ConstK, IdK } ExpKind;
-
+typedef enum { OpK, ConstK, IdK,ArrIdK,CallK,AssignK } ExpKind;
+typedef enum {FuncK,VarK,ArrK} DeclKind;
+typedef enum {ParamVarK,ParamArrK} ParamKind;
+typedef enum {TypeNameK} TypeKind;
 /* ExpType is used for type checking */
-typedef enum { Void, Integer, Boolean, Array } ExpType;
+typedef enum { Void, Integer, Array } ExpType;
 
 #define MAXCHILDREN 3
-
+#define Array 289
 typedef struct treeNode
    {
      struct treeNode * child[MAXCHILDREN];
@@ -70,12 +72,21 @@ typedef struct treeNode
      union {
          StmtKind stmt;
          ExpKind exp;
+		 DeclKind decl;
+		 ParamKind param;
+		 TypeKind type;
      } kind;
      union { 
+		TokenType type;
          TokenType op;
-         int val;
+         int val,size;
          char * name;
      } attr;
+	 int intflag;
+	 struct{
+		char*name;
+		int size;
+	 }arrAttr;
      ExpType type; /* for type checking of exps */
    } TreeNode;
 
@@ -112,5 +123,6 @@ extern int TraceAnalyze;
 extern int TraceCode;
 
 /* Error = TRUE prevents further passes if an error occurs */
-extern int Error; 
+extern int Error;
+
 #endif

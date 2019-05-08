@@ -326,13 +326,9 @@ void printTree( TreeNode * tree )
 				}
 				else if(tree->kind.decl==VarK){
 					fprintf(listing,"Variable Declaration\n");
-					printSpaces();
-					fprintf(listing,"ID: %s\n",tree->attr.name);
 				}
 				if(tree->kind.decl==ArrK){
 					fprintf(listing,"Array Declaration\n");
-					printSpaces();
-					fprintf(listing,"ID: %s\n",tree->attr.name);
 						
 				} 
         }

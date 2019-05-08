@@ -18,7 +18,7 @@ static int savedLineno; /*for use*/
 static TreeNode* savedTree;/*stores syntax tree for later return*/
 static int yylex(void);
 %}
-
+%define parse.error verbose
 /* reserved words */
 %token IF ELSE INT RETURN VOID WHILE
 /* multicharacter tokens */
@@ -34,7 +34,7 @@ static int yylex(void);
 /* to resolve reduce shift conflict */
 /*%right RPAREN RBRACE RBRACKET ELSE*/
 /*parameter to resolve reduce/shift conflict in int a[], int a*/
-%right RBRACKET RPAREN ELSE
+%right RPAREN ELSE
 %%
 
 /* 1 */
@@ -95,8 +95,8 @@ var_declaration : type_specifier identifier SEMI
 						$$ = newDeclNode(VarK);
 						$$->attr.name = $2->attr.name;
 						$$->lineno = lineno;
-						$$->sibling = newTypeNode(TypeNameK);
-						$$->sibling->attr.type = $1->attr.type;
+						$$->child[0] = $1;
+						$$->child[1] = $2;
 				}
 				| type_specifier identifier LBRACKET number RBRACKET SEMI
 				{
@@ -104,12 +104,9 @@ var_declaration : type_specifier identifier SEMI
 						$$ = newDeclNode(ArrK);
 						$$->attr.name = $2->attr.name;
 						$$->lineno = lineno;
-						$$->sibling = newTypeNode(TypeNameK);
-						$$->sibling->attr.type = $1->attr.type;
-						$$->sibling->lineno = lineno;
-						$$->sibling->sibling = newExpNode(ConstK);
-						$$->sibling->sibling->attr.val = savedNumber;
-						$$->sibling->sibling->lineno = lineno;
+						$$->child[0] = $1;
+						$$->child[1] = $2;
+						$$->child[2] = $4;
 				}
 				;
 /* 5 */
@@ -185,6 +182,8 @@ param : type_specifier identifier
 		$$->attr.name = $2->attr.name;
 		$$->child[0] = $1;
 		$$->child[1] = $2;
+		$$->child[2] = newExpNode(ConstK);
+		$$->child[2]->attr.val = 0;
 	}
 	;
 
@@ -200,8 +199,6 @@ compound_stmt : LBRACE local_declarations statement_list RBRACE
 local_declarations : local_declarations var_declaration
 				{
 					YYSTYPE t = $1;
-				//for local variable int!
-				$2->sibling->intflag = 1;
 					if(t){
 							while(t->sibling) t = t->sibling;
 							t->sibling = $2;
@@ -515,4 +512,3 @@ TreeNode* parse(void){
 		yyparse();
 		return savedTree;
 }
-

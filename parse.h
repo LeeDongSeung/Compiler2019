@@ -12,5 +12,4 @@
  * constructed syntax tree
  */
 TreeNode* parse(void);
-
 #endif

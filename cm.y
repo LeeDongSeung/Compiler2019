@@ -147,6 +147,7 @@ params : param_list
 		| VOID
 		{
 			$$ = newParamNode(ParamVarK);
+			$$->attr.type = VOID;
 		}
 		;
 

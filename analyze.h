@@ -17,5 +17,5 @@ void buildSymtab(TreeNode *);
  * by a postorder syntax tree traversal
  */
 void typeCheck(TreeNode *);
-
+void insertNode(TreeNode*t,int depth);
 #endif

@@ -26,32 +26,36 @@ typedef struct LineListRec{
  * the list of line number in which
  * it appears in the source code
  */
+#define SIZE 211
 typedef struct BucketListRec{
 		char* name;
+        TreeNode*tree;
 		LineList lines;
 		int memloc;/* memory location for variable */
 		struct BucketListRec*next;
 }*BucketList;
 /*to determine redeclaration!*/
-int st_find(char*name,BucketList*arr);
+TreeNode* st_find(char*name,int depth);
 #define MAX_SCOPE 200
 /* hash table */
-static BucketList*hashTable[MAX_SCOPE];
+/* indirecting addressing impossible!
+2019 05 09 i need to complement this more!*/
+BucketList*hashTable[MAX_SCOPE];
 /* Procedure st_insert inserts line numbers and
  * memory locations into the symbol table
  * loc = memory locations is inserted only the
  * first time, otherwise ignored
  */
-void st_insert(char*name,int lineno,int loc,BucketList*arr);
-static int scope_level = 0;
+void st_insert(char*name,int lineno,int loc,int depth,TreeNode*tree);
 /* Function st_lookup returns the memory
  * location of a variable or -1 if not found
  */
-int st_lookup(char*name,BucketList*arr);
+TreeNode*st_lookup(char*name,int depth);
 
 /* Procedure printSymTab prints a formatted
  * listing of the symbol table contents
  * to the listing file
  */
 void printSymTab(FILE*listing);
+void freeBucketList(BucketList*arr);
 #endif

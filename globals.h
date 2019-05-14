@@ -84,7 +84,8 @@ typedef struct treeNode
      } attr;
      int intflag;
      ExpType type; /* for type checking of exps */
-   } TreeNode;
+	struct treeNode*declTree;
+} TreeNode;
 
 /**************************************************/
 /***********   Flags for tracing       ************/

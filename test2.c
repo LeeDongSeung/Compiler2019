@@ -50,6 +50,6 @@ void main(void)
 		while(i<10)
 		{
 				output(x[i]);
-				i = i+1;
+				i = i+3+2+j;
 		}
 }

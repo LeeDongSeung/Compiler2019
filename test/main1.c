@@ -1,3 +1,4 @@
+
 /* A program to perform Euclid's
    Algorithm to computer gcd. */
 int gcd(int u,int v)

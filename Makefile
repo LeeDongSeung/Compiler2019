@@ -1,7 +1,7 @@
 CC = gcc
 CFLAGS = -g -Wall
 OBJS = main.o util.o lex.yy.o cm.tab.o symtab.o analyze.o
-TARGET = 20161616
+TARGET = project3_6
 OTHERS = lex.yy.c cm.tab.c cm.tab.h cm.output
 $(TARGET): $(OBJS)
 	$(CC) $(CFLAGS) -o $(TARGET) $(OBJS)

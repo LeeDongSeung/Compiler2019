@@ -17,7 +17,7 @@ static int savedNumber;
 static int savedLineno; 
 static TreeNode* savedTree;
 
-int yyerror (char*);
+int yyerror (const char*);
 static int yylex(void);
 %}
 %define parse.error verbose
@@ -494,7 +494,7 @@ arg_list : arg_list COMMA expression
 		;
 %%
 
-int yyerror (char*message){
+int yyerror (const char*message){
 	fprintf(listing,"Syntax error at line %d: %s\n",lineno,message);
 	fprintf(listing,"Current Token: ");
 	printToken(yychar,tokenString);

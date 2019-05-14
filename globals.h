@@ -29,17 +29,6 @@
 
 /* MAXRESERVED = the number of reserved words */
 #define MAXRESERVED 8
-/*
-typedef enum
-	{ENDFILE,ERROR,
-	IF,ELSE,INT,RETURN,WHILE,VOID,
-	ID,NUM,
-	ASSIGN,EQ,LT,LTEQ,GT,GTEQ,NOTEQ,PLUS,MINUS,TIMES,OVER,
-	LPAREN,RPAREN,SEMI,COMMA,LBRACE,RBRACE,LBRACKET,RBRACKET,
-	COMMENT,COMMENT_ERROR
-	
-	}TokenType;
-*/
 
 typedef int TokenType;
 extern FILE* source; /* source code text file */
@@ -77,14 +66,14 @@ typedef struct treeNode
 		 TypeKind type;
      } kind;
      union { 
-		TokenType type;
+		 TokenType type;
          TokenType op;
          int val,size;
          char * name;
      } attr;
      int intflag;
      ExpType type; /* for type checking of exps */
-	struct treeNode*declTree;
+	 /*struct treeNode*declTree; */
 } TreeNode;
 
 /**************************************************/

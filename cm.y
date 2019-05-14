@@ -13,9 +13,11 @@
 #include "parse.h"
 
 #define YYSTYPE TreeNode*
-static int savedNumber; /* for use in assignments as a number*/
-static int savedLineno; /*for use*/
-static TreeNode* savedTree;/*stores syntax tree for later return*/
+static int savedNumber; 
+static int savedLineno; 
+static TreeNode* savedTree;
+
+int yyerror (char*);
 static int yylex(void);
 %}
 %define parse.error verbose
@@ -31,9 +33,6 @@ static int yylex(void);
 %token ERROR ENDFILE
 %token COMMENT COMMENT_ERROR
 
-/* to resolve reduce shift conflict */
-/*%right RPAREN RBRACE RBRACKET ELSE*/
-/*parameter to resolve reduce/shift conflict in int a[], int a*/
 %right RPAREN ELSE
 %%
 
@@ -495,7 +494,7 @@ arg_list : arg_list COMMA expression
 		;
 %%
 
-int yyerror(char*message){
+int yyerror (char*message){
 	fprintf(listing,"Syntax error at line %d: %s\n",lineno,message);
 	fprintf(listing,"Current Token: ");
 	printToken(yychar,tokenString);
@@ -506,10 +505,10 @@ int yyerror(char*message){
  * compatible with earlier version of
  * the TINY scanner
  */
-static int yylex(void){
-		return getToken();
+static int yylex (void){
+	return getToken();
 }
-TreeNode* parse(void){
-		yyparse();
-		return savedTree;
+TreeNode* parse (void){
+	yyparse();
+	return savedTree;
 }

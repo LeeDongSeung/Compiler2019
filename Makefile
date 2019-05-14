@@ -14,6 +14,7 @@ util.o: globals.h util.h util.c
 
 lex.yy.o: globals.h util.h scan.h lex.yy.c
 	gcc $(CFLAGS) -c lex.yy.c
+
 lex.yy.c: tiny.l
 	flex tiny.l
 

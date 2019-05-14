@@ -81,9 +81,10 @@ int main( int argc, char * argv[] )
 #if !NO_ANALYZE
   if (! Error)
     {
-	  /*
+	  
       fprintf(listing,"\nBuilding Symbol Table...\n");
       buildSymtab(syntaxTree);
+	  /*
       fprintf(listing,"\nChecking Types...\n");
       typeCheck(syntaxTree);
       fprintf(listing,"\nType Checking Finished\n");

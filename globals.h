@@ -71,7 +71,7 @@ typedef struct treeNode
          int val,size;
          char * name;
      } attr;
-     /*int intflag; */
+     int intflag;
      ExpType type; /* for type checking of exps */
 	 /*struct treeNode*declTree; */
 } TreeNode;

@@ -35,7 +35,26 @@ static void nullProc (TreeNode* t) {
 	else return;
 }
 
+static void insertNode (TreeNode* t) {
+	switch(t->nodekind) {
 
+		case StmtK:
+			break;
+		case ExpK:
+			break;
+		case DeclK:
+			break;
+		case TypeK:
+			break;
+		case ParamK:
+			break;
+	}
+}
+
+void buildSymtab (TreeNode* syntaxTree) {
+
+	scope_push (scope_new());
+}
 
 
 

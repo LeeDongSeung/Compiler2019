@@ -1,0 +1,11 @@
+project3_6
+*.o
+*.swp
+cm.tab.c
+cm.tab.h
+cm.output
+lex.yy.c
+test
+test1.c
+test2.c
+test3.c
